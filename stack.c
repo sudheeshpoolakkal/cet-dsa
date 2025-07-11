@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-int top = -1;
-int max;
+int top = -1, max;
 void push(int stack[]);
 void pop(int stack[]);
 void display(int stack[]);
@@ -89,6 +88,6 @@ void display(int stack[])
         {
             printf("%d ", stack[i]);
         }
-        printf("\n") l
+        printf("\n");
     }
 }
