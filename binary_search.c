@@ -1,5 +1,5 @@
 #include <stdio.h>
-void input(int arr[], int n);
+void insert(int arr[], int n);
 // Function prototype
 void binary_search(int arr[], int n);
 
@@ -10,12 +10,12 @@ int main()
     printf("Enter the size of the array: ");
     scanf("%d", &n);
     int arr[n];
-    input(arr, n);
+    insert(arr, n);
     binary_search(arr, n);
     return 0;
 }
 
-void input(int arr[], int n)
+void insert(int arr[], int n)
 {
 
     printf("Enter the elements in sorted order: ");

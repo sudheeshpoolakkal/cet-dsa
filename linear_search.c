@@ -1,7 +1,7 @@
 // with function
 #include <stdio.h>
 #include <time.h>
-void input(int arr[], int n);
+void insert(int arr[], int n);
 void linear_search(int arr[], int n);
 
 int main()
@@ -10,12 +10,12 @@ int main()
     printf("Enter the number of elements in the array: ");
     scanf("%d", &n);
     int arr[n];
-    input(arr,n);
+    insert(arr,n);
     linear_search(arr,n);
     return 0;
 }
 
-void input(int arr[], int n)
+void insert(int arr[], int n)
 {
     int i;
     
