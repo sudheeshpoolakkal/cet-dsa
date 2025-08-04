@@ -1,25 +1,25 @@
 #include<stdio.h>
 #include<stdlib.h>
-int front =-1, rear=-1, max;
-void insertFront(int dequeue[]);
-void insertRear(int dequeue[]);
-void deleteFront(int dequeue[]);
-void deleteRear(int dequeue[]);
-void display(int dequeue[]);
+int front =-1, rear=-1, max;  
+void insertFront(int deque[]);
+void insertRear(int deque[]);
+void deleteFront(int deque[]);
+void deleteRear(int deque[]);
+void display(int deque[]);
 int isFull();
 int isEmpty();
-void peek(int dequeue[]);
+void peek(int deque[]);
 void main()
 {
 
     printf("Enter the size of the queue: ");
     scanf("%d", &max);
-    int *dequeue = (int *)malloc(max * sizeof(int));
+    int *deque = (int *)malloc(max * sizeof(int));
     int choice;
 
     while (1)
     {
-        printf("\n1. Insert front \n2.Insert rear\n3.Delete front\n4.Delete rear\n5. Display\n6. Is Full?\n7. Is Empty?\n8. Peek\n9. Exit\n");
+        printf("\n1. Insert front \n2. Insert rear\n3. Delete front\n4. Delete rear\n5. Display\n6. Is Full?\n7. Is Empty?\n8. Peek\n9. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -27,19 +27,19 @@ void main()
         {
 
         case 1:
-            insertFront(dequeue);
+            insertFront(deque);
             break;
         case 2:
-            insertRear(dequeue);
+            insertRear(deque);
             break;
         case 3:
-            deleteFront(dequeue);
+            deleteFront(deque);
             break;
         case 4:
-            deleteRear(dequeue);
+            deleteRear(deque);
             break;
         case 5:
-            display(dequeue);
+            display(deque);
             break;
         case 6:
             isFull();
@@ -48,11 +48,11 @@ void main()
             isEmpty();
             break;
         case 8:
-            peek(dequeue);
+            peek(deque);
             break;
         case 9:
             printf("Exiting the program, goodbye!\n");
-            free(dequeue);
+            free(deque);
             exit(0);
 
         default:
@@ -60,71 +60,96 @@ void main()
         }
     }
 }
-void insertRear(int dequeue[]){
+void insertRear(int deque[]){
     if(isFull()){
         printf("Queue Overflow!\n");
     }else{
-        int element;
+        
         if(front==-1){
-            front = 0;
-            rear = 0;
-            printf("Enter a number to enqueue: ");
-            scanf("%d", &element);
-            dequeue[rear] = element;
-            printf("Element %d inserted to the queue!\n", element);
+            front = rear =0;     
         }
         else{
-            rear++;
-            printf("Enter a number to enqueue: ");
-            scanf("%d", &element);
-            dequeue[rear] = element;
-            printf("Element %d inserted to the queue!\n", dequeue[rear]);
+            rear = (rear + 1) % max; //circular increment
         }
+        int element;
+        printf("Enter a number to enqueue: ");
+            scanf("%d", &element);
+            deque[rear] = element;
+            printf("Element %d inserted to the queue!\n", element);
     }
 }
 
-void deleteFront(int dequeue[]){
-    if(isEmpty()){
-        printf("Queue Underflow!\n");
+void insertFront(int deque[]){
+
+    if(isFull()){
+    printf("Queue Overflow!\n");
     }else{
-        printf("Element %d removed from the queue!\n", dequeue[front]);
-        front++;
-        if(front > rear){
-            front = -1;
-            rear = -1;
-        }
+            if(front==-1)
+               front = rear = 0;
+            else front = (front - 1 + max) % max;  //circular decrement
+     int element;
+     printf("Enter an element to enqueue");
+     scanf("%d",&element);
+     deque[front] = element;
+     printf("Element %d insert to thw queue!\n",element);
     }
 }
-void display(int dequeue[])
+
+void deleteRear(int deque[])
 {
-    if (isEmpty())
-    {
-        printf("Queue is empty!\n");
+    if(isEmpty())
+      printf("Queue underflow!");
+    else{
+      printf("Element %d removed from the queue!\n", deque[rear]);
+          if(front == rear)
+              front = rear = -1;
+          else
+              rear = (rear - 1 + max) % max; //circular decrement
     }
-    else
-    {
-        printf("Elements in the queue are :");
-        for (int i=front; i<=rear; i++)
-        {
-            printf("%d ", dequeue[i]);
-        }
+}
+
+void deleteFront(int deque[]){
+    if(isEmpty())
+        printf("Queue Underflow!\n");
+    else{
+        printf("Element %d removed from the queue!\n", deque[front]);
+        front++;
+             if(front == rear)
+                front = rear -1;
+             else front = (front + 1) % max;
+    }
+}
+
+void display(int deque[]) {
+    if (isEmpty()) {
+        printf("Queue is empty!\n");
+    } else {
+        printf("Elements in the queue are: ");
+        int i = front;
+        do {
+            printf("%d ", deque[i]);
+            if (i == rear) break;
+            i = (i + 1) % max;
+        } while (1);
         printf("\n");
     }
 }
+
+
 int isFull()
 {
-    return (rear == max - 1);
+    return (front == (rear + 1) % max);  
 }
 
 int isEmpty()
 {
     return (front == -1);
 }
-void peek(int queue[]){
+void peek(int deque[]){
     if(isEmpty()){
         printf("Queue is empty. nothing to peek!");
     }
     else{
-        printf("Front element: %d Rear element: %d",queue[front],queue[rear]);
+        printf("Front element: %d Rear element: %d",deque[front],deque[rear]);
     }
 }
