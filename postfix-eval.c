@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
 
 int top = -1, max;
 
@@ -154,7 +155,7 @@ int peek(int stack[])
 
 int isOperator(char c)
 {
-    return (c == '+' || c == '-' || c == '*' || c == '/' || c == '%');
+    return (c == '+' || c == '-' || c == '*' || c == '/' || c == '%' || c == '^');
 }
 
 int performOperation(int operand1, int operand2, char operator)
@@ -178,6 +179,8 @@ int performOperation(int operand1, int operand2, char operator)
                 return 0;
             }
             return operand1 % operand2;
+        case '^':
+              return (int)pow(operand1, operand2);
         default:
             printf("Error: Unknown operator '%c'\n", operator);
             return 0;
